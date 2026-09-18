@@ -14,7 +14,7 @@ Open a folder, edit files and search the workspace without setting up Git first.
 
 ## Download
 
-The current release is **0.4.2**.
+The current release is **0.4.3**.
 
 ### Linux
 
@@ -25,8 +25,8 @@ The release page contains an AppImage, a tarball and `SHA256SUMS.txt`.
 For an AppImage:
 
 ```bash
-chmod +x Luma-0.4.2.AppImage
-./Luma-0.4.2.AppImage
+chmod +x Luma-0.4.3.AppImage
+./Luma-0.4.3.AppImage
 ```
 
 The AppImage does not need a system installation. Keep it wherever you want. If you want it in the application menu, use the installer helper from the repository:
@@ -49,8 +49,8 @@ Arch users can also use the package files from the release page or the AUR recip
 
 Choose one of these files:
 
-- `Luma Setup 0.4.2.exe` — normal installation with a Start menu shortcut;
-- `Luma 0.4.2.exe` — portable build, if you do not want an installer.
+- `Luma Setup 0.4.3.exe` — normal installation with a Start menu shortcut;
+- `Luma 0.4.3.exe` — portable build, if you do not want an installer.
 
 Windows may show a SmartScreen warning because the build is not signed with a commercial certificate. Click **More info → Run anyway** only if the file was downloaded from the official release page above.
 

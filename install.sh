@@ -6,7 +6,7 @@
 set -Eeuo pipefail
 IFS=$'\n\t'
 
-readonly REPO="drainedgodw/luma-ide-linux"
+readonly REPO="drainedgodw/luma-ide"
 readonly REF="${LUMA_REF:-main}"
 readonly HOME_DIR="${HOME:?HOME is not set}"
 readonly DATA_HOME="${XDG_DATA_HOME:-$HOME_DIR/.local/share}"

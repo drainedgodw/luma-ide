@@ -1,10 +1,12 @@
 import { app, ipcMain } from 'electron';
 import { spawn } from 'node:child_process';
+import { join } from 'node:path';
+import { writeFile } from 'node:fs/promises';
 
-// Anonymous update check: one static file over plain HTTPS.
-// No account, no token, no machine id — everyone gets the same bytes.
-const VERSION_URL = 'https://raw.githubusercontent.com/drainedgodw/luma-ide-linux/main/update.json';
-const INSTALLER_URL = 'https://raw.githubusercontent.com/drainedgodw/luma-ide-linux/main/install.sh';
+const REPO = 'drainedgodw/luma-ide';
+const VERSION_URL = `https://raw.githubusercontent.com/${REPO}/main/update.json`;
+const INSTALLER_URL = `https://raw.githubusercontent.com/${REPO}/main/install.sh`;
+const RELEASES_URL = `https://api.github.com/repos/${REPO}/releases/latest`;
 
 function newerThan(latest: string, current: string): boolean {
   const a = latest.split('.').map(Number);
@@ -29,6 +31,25 @@ async function latestVersion(): Promise<string> {
   }
 }
 
+async function updateWindows(): Promise<void> {
+  const response = await fetch(RELEASES_URL, { headers: { 'User-Agent': 'Luma updater' } });
+  if (!response.ok) throw new Error(`windows update: GitHub HTTP ${response.status}`);
+  const release = (await response.json()) as {
+    tag_name?: string;
+    assets?: Array<{ name: string; browser_download_url: string }>;
+  };
+  const asset = release.assets?.find((item) => /setup.*\.exe$/i.test(item.name)) ??
+    release.assets?.find((item) => item.name.endsWith('.exe'));
+  if (!asset) throw new Error('windows update: installer asset was not found');
+  const installerResponse = await fetch(asset.browser_download_url, {
+    headers: { 'User-Agent': 'Luma updater' },
+  });
+  if (!installerResponse.ok) throw new Error(`windows update: download HTTP ${installerResponse.status}`);
+  const installer = join(app.getPath('temp'), `Luma-${release.tag_name ?? 'update'}-Setup.exe`);
+  await writeFile(installer, Buffer.from(await installerResponse.arrayBuffer()));
+  spawn(installer, ['/S'], { detached: true, stdio: 'ignore', windowsHide: true }).unref();
+}
+
 export function registerUpdateIpc(): void {
   ipcMain.handle('update:check', async () => {
     try {
@@ -39,22 +60,28 @@ export function registerUpdateIpc(): void {
       return { ok: false, error: { message: (error as Error).message, stderr: '' } };
     }
   });
-  ipcMain.handle('update:run', (_event, channel: string) => {
+
+  ipcMain.handle('update:run', async (_event, channel: string) => {
     if (channel !== 'release' && channel !== 'nightly')
       return { ok: false, error: { message: 'Unknown update channel', stderr: '' } };
-    // the installer verifies checksums and cosign, then swaps the app atomically
-    const child = spawn(
-      'bash',
-      ['-c', `curl -fsSL ${INSTALLER_URL} | bash -s -- --${channel}`],
-      { detached: true, stdio: 'ignore' }
-    );
-    child.on('exit', (code) => {
-      if (code === 0) {
+    try {
+      if (process.platform === 'win32') {
+        await updateWindows();
+      } else {
+        const child = spawn(
+          'bash',
+          ['-c', `curl -fsSL ${INSTALLER_URL} | bash -s -- --update --release`],
+          { detached: true, stdio: 'ignore' }
+        );
+        child.unref();
+      }
+      setTimeout(() => {
         app.relaunch();
         app.exit(0);
-      }
-    });
-    child.unref();
-    return { ok: true, data: 'updating' };
+      }, 300);
+      return { ok: true, data: 'updating' };
+    } catch (error) {
+      return { ok: false, error: { message: (error as Error).message, stderr: '' } };
+    }
   });
 }
