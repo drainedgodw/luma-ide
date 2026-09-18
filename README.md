@@ -1,63 +1,107 @@
-<div align="center">
-
-<img src="build/icon.png" width="96" alt="Luma logo" />
-
 # Luma
 
-**Make every Git move visible before it matters.**
+Luma is a desktop code editor with optional visual Git tools.
 
-A visual, Git-first desktop IDE for Linux, with a Windows edition maintained in a companion repository.
+Open a folder, edit files and search the workspace without setting up Git first. When the folder is a Git repository, Luma adds changes, history, recovery and GitHub views around it.
 
-![platform](https://img.shields.io/badge/platform-Linux%20%7C%20Windows-1793d1) ![license](https://img.shields.io/badge/license-MIT-22c55e) ![status](https://img.shields.io/badge/status-stable%20release%20line-22c55e)
+- Electron + React + TypeScript
+- CodeMirror editor
+- Git is optional for ordinary editing
+- Cosmos and Liquid Glass themes
+- Adjustable Liquid Glass blur
+- Linux and Windows builds
+- MIT licensed
 
-</div>
+## Download
 
-> [!WARNING]
-> Luma 0.4.1 is the new Linux release target. Keep a remote backup and begin with non-critical repositories until the first Linux 0.4.1 artifact finishes validation.
+The current release is **0.4.2**.
 
-### Screenshots — Linux and Windows editions
+### Linux
 
-<table>
-<tr>
-<td><img src="docs/screenshots/login.png" alt="Luma start screen" /></td>
-<td><img src="docs/screenshots/code.png" alt="Luma code editor" /></td>
-</tr>
-<tr>
-<td><img src="docs/screenshots/changes.png" alt="Luma changes view" /></td>
-<td><img src="docs/screenshots/history_orbit.png" alt="Luma history view" /></td>
-</tr>
-<tr>
-<td><img src="docs/screenshots/GitHub.png" alt="Luma GitHub integration" /></td>
-<td><img src="docs/screenshots/Tools.png" alt="Luma tools view" /></td>
-</tr>
-</table>
+[Download the latest Linux release](https://github.com/drainedgodw/luma-ide/releases/latest)
 
-## Install on Linux — Bash, x86_64
+The release page contains an AppImage, a tarball and `SHA256SUMS.txt`.
 
-Once the `v0.4.1` Linux Release is published, this one command downloads the current stable AppImage, verifies its checksum, installs it under `~/.local`, creates the launcher and adds Luma to the application menu:
+For an AppImage:
 
 ```bash
-curl --fail --location --show-error --progress-bar \
-  https://raw.githubusercontent.com/drainedgodw/luma-ide-linux/main/install.sh \
-  | bash -s -- --install --release
+chmod +x Luma-0.4.2.AppImage
+./Luma-0.4.2.AppImage
 ```
 
-The command is Bash-first and safe to paste from fish. The current Linux release workflow is ready; pushing tag `v0.4.1` starts the GitHub Actions build and publishes the AppImage, tarball and `SHA256SUMS.txt`.
+The AppImage does not need a system installation. Keep it wherever you want. If you want it in the application menu, use the installer helper from the repository:
+
+```bash
+bash install.sh --install --release
+```
+
+The helper installs Luma under `~/.local`, creates a desktop entry and can be removed with:
+
+```bash
+bash install.sh --uninstall
+```
+
+Arch users can also use the package files from the release page or the AUR recipe in `aur/`.
+
+### Windows
+
+[Download the latest Windows release](https://github.com/drainedgodw/luma-ide/releases/latest)
+
+Choose one of these files:
+
+- `Luma Setup 0.4.2.exe` — normal installation with a Start menu shortcut;
+- `Luma 0.4.2.exe` — portable build, if you do not want an installer.
+
+Windows may show a SmartScreen warning because the build is not signed with a commercial certificate. Click **More info → Run anyway** only if the file was downloaded from the official release page above.
+
+To remove the installed version, use **Windows Settings → Apps → Installed apps → Luma → Uninstall**. The portable build can be removed by deleting its file.
+
+## Liquid Glass blur
+
+Open **Settings → Appearance & sound** and select **Liquid Glass**. The **Liquid Glass blur** slider controls the strength of the frosted effect:
+
+- left: blur is off;
+- middle: light blur;
+- right: stronger blur.
+
+The setting is stored locally and does not change the Cosmos theme.
 
 ## Build from source
 
+Requirements:
+
+- Node.js 22;
+- npm 10 or newer;
+- the native build tools required by Electron and `node-pty`.
+
 ```bash
-git clone https://github.com/drainedgodw/luma-ide-linux.git
-cd luma-ide-linux
-bash scripts/install-system-deps.sh
-bash scripts/bootstrap.sh dev
+git clone https://github.com/drainedgodw/luma-ide.git
+cd luma-ide
+npm ci
+npm run typecheck
+npm test
+npm run build
 ```
 
-The dependency helper supports Arch/Manjaro, Debian/Ubuntu, Fedora/RHEL, openSUSE, Alpine, Void, Gentoo and Nix. The bootstrap keeps compatible Node 22 and CPython 3.11 inside `.luma/`.
+For a local Linux package:
 
-## Windows edition
+```bash
+npx electron-builder --linux AppImage tar.gz --publish never
+```
 
-See [luma-ide-windows](https://github.com/drainedgodw/luma-ide-windows) for the stable Windows 10/11 x64 `v0.4.1` installer. Linux and Windows now share the 0.4.1 release line; their platform artifacts remain separate.
+For a local Windows package, run the same command on Windows:
+
+```powershell
+npm ci
+npm run typecheck
+npm test
+npm run build
+npx electron-builder --win nsis portable --publish never
+```
+
+## About
+
+See [ABOUT.md](ABOUT.md) for the short product description and the Liquid Glass behavior.
 
 ## License
 

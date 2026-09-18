@@ -115,6 +115,27 @@ export default function SettingsView() {
                 </button>
               ))}
             </div>
+            <Row
+              label="Liquid Glass blur"
+              hint="0 turns blur off; move right for stronger frosted glass"
+            >
+              <div className={`flex items-center gap-3 ${settings.theme === 'liquid' ? '' : 'opacity-40'}`}>
+                <input
+                  aria-label="Liquid Glass blur"
+                  type="range"
+                  min={0}
+                  max={64}
+                  step={1}
+                  disabled={settings.theme !== 'liquid'}
+                  value={settings.liquidBlur}
+                  onChange={(e) => update({ liquidBlur: +e.target.value })}
+                  className="accent-lilac"
+                />
+                <span className="w-12 text-right font-mono text-xs text-white/60">
+                  {settings.liquidBlur === 0 ? 'Off' : `${settings.liquidBlur}px`}
+                </span>
+              </div>
+            </Row>
             <Toggle
               label="Interface sounds"
               hint="Subtle, distinct tones for navigation, actions and destructive controls"
@@ -154,11 +175,13 @@ export default function SettingsView() {
             <div className="glass-soft flex items-center justify-between px-4 py-3">
               <div>
                 <div className="text-sm font-bold tracking-[0.25em] text-lilac">LUMA</div>
-                <div className="text-xs text-white/40">Version 0.2.0 · MIT license</div>
+                <div className="text-xs text-white/40">Version 0.4.2 · MIT license</div>
               </div>
               <div className="text-right font-mono text-[11px] text-white/35">
                 <div>{repo ? repo.split('/').pop() : 'no repository'}</div>
-                <div>Electron · React · CodeMirror</div>
+                <div>Electron · React · CodeMirror
+                <br />
+                Liquid Glass blur control</div>
               </div>
             </div>
           </section>

@@ -9,6 +9,7 @@ export interface Settings {
   reduceMotion: boolean;
   wordWrap: boolean;
   theme: 'cosmos' | 'liquid';
+  liquidBlur: number;
   installedPacks: string[];
   explorer: 'pinned' | 'auto';
   soundEffects: boolean;
@@ -23,6 +24,7 @@ const DEFAULTS: Settings = {
   reduceMotion: false,
   wordWrap: false,
   theme: 'cosmos',
+  liquidBlur: 32,
   installedPacks: ['typescript', 'javascript'],
   explorer: 'auto',
   soundEffects: true,
@@ -52,6 +54,8 @@ export function SettingsProvider({ children }: { children: React.ReactNode }) {
     localStorage.setItem(KEY, JSON.stringify(settings));
     document.documentElement.classList.toggle('reduce-motion', settings.reduceMotion);
     document.documentElement.dataset.theme = settings.theme;
+    document.documentElement.style.setProperty('--liquid-blur', `${settings.liquidBlur}px`);
+    document.documentElement.style.setProperty('--liquid-button-blur', `${Math.round(settings.liquidBlur / 2)}px`);
   }, [settings]);
 
   useEffect(() => {

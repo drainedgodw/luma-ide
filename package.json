@@ -1,13 +1,13 @@
 {
   "name": "luma",
   "productName": "Luma",
-  "version": "0.4.1",
-  "description": "Luma — a visual Git-first IDE for Linux, stable 0.4.1.",
+  "version": "0.4.2",
+  "description": "Luma \u2014 a visual Git-first IDE for Linux and Windows.",
   "main": "out/main/index.js",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/drainedgodw/luma-ide-linux.git"
+    "url": "https://github.com/drainedgodw/luma-ide.git"
   },
   "author": "Luma contributors",
   "engines": {
