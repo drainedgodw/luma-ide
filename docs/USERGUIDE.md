@@ -1,32 +1,73 @@
 # Luma — User Guide
 
-Luma is a Git-first IDE built around a visual history. This guide covers everything you need day to day: installation, the start screen, the editor, Git workflows, and every keyboard shortcut.
+Luma is a Git-first IDE built around a visual history. This guide covers installation, downloads, the start screen, the editor, Git workflows, and keyboard shortcuts on Linux and Windows.
 
 ---
 
 ## 1. Installing and updating
 
-Install or update Luma with one command (works like a package manager — desktop entry, icon, and a `luma` command are created automatically):
+### Linux one-command install
+
+Install or update Luma with the official installer:
 
 ```bash
-pkill -x luma 2>/dev/null || true; bash -c "$(curl -fsSL https://raw.githubusercontent.com/drainedgodw/luma-ide-linux/main/install.sh)"
+bash -c "$(curl -fsSL https://raw.githubusercontent.com/drainedgodw/luma-ide/main/install.sh)"
 ```
 
-After installation, launch Luma from your application menu or by typing `luma` in a terminal.
+The installer places the app under `~/.local/opt/luma`, creates `~/.local/bin/luma`, installs a desktop entry and icon, and verifies the AppImage checksum. FUSE is not required because the AppImage is unpacked during installation.
 
-Remove the app but keep your settings:
+Select a channel when needed:
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/drainedgodw/luma-ide-linux/main/install.sh | bash -s -- --uninstall
+curl -fsSL https://raw.githubusercontent.com/drainedgodw/luma-ide/main/install.sh | bash -s -- --release
+curl -fsSL https://raw.githubusercontent.com/drainedgodw/luma-ide/main/install.sh | bash -s -- --nightly
+curl -fsSL https://raw.githubusercontent.com/drainedgodw/luma-ide/main/install.sh | bash -s -- --source
 ```
 
-Remove everything (app, settings, sessions, saved credentials):
+Update by running the same command again. Remove the application but keep settings with `--uninstall`; remove application data too with `--purge`:
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/drainedgodw/luma-ide-linux/main/install.sh | bash -s -- --purge
+curl -fsSL https://raw.githubusercontent.com/drainedgodw/luma-ide/main/install.sh | bash -s -- --uninstall
+curl -fsSL https://raw.githubusercontent.com/drainedgodw/luma-ide/main/install.sh | bash -s -- --purge
 ```
 
-> AppImage is unpacked during installation, so FUSE is not required.
+### Linux manual download
+
+The stable release is **0.4.3**. Download `Luma-0.4.3.AppImage` and `SHA256SUMS.txt` from the release page, then verify and run it:
+
+```bash
+sha256sum -c SHA256SUMS.txt --ignore-missing
+chmod +x Luma-0.4.3.AppImage
+./Luma-0.4.3.AppImage
+```
+
+### Windows 10/11 download
+
+Download the x64 package from the official Windows release page. Choose:
+
+- `Luma-Windows-Setup-x64.exe` for a normal installation;
+- `Luma-Windows-Portable-x64.exe` for a portable copy;
+- `SHA256SUMS.txt` to verify the file.
+
+Run the setup executable, complete the wizard, and launch Luma from the Start menu. To remove it, use **Settings → Apps → Installed apps → Luma → Uninstall**. For the portable build, close Luma and delete the executable.
+
+If SmartScreen warns about the unsigned installer, check the checksum and use **More info → Run anyway** only when the file came from the official release page.
+
+### Windows build from source
+
+Windows builds use Node.js 22 from `.nvmrc`, npm 10 or newer, Git, Python 3.11 and Visual Studio Build Tools 2022:
+
+```powershell
+git clone https://github.com/drainedgodw/luma-ide.git
+cd luma-ide
+npm ci
+npm run typecheck
+npm test
+npm run build
+npx electron-builder --win nsis portable --publish never
+```
+
+The generated installers are placed in `dist/`.
 
 ## 2. The start screen
 
@@ -56,7 +97,7 @@ To come back to this screen later and pick another folder, press the **⌂** but
 
 ## 5. History — Lanes and Orbit
 
-**History** shows the commit graph in two modes (toggle in the section header):
+**History** shows the commit graph in two modes:
 
 - **Lanes** — the classic vertical commit lanes.
 - **Orbit** — the same commits as a flat web, Obsidian-style: parents and children pull together, everything else pushes apart. Newest commits start near the center.
@@ -139,7 +180,7 @@ The GitHub section connects to your account (credentials are stored locally in y
 ## 13. Getting help
 
 - Something looks wrong? Check **Help** in the top bar for the built-in getting-started guide.
-- Found a bug or have an idea? Open an issue at <https://github.com/drainedgodw/luma-ide-linux/issues>.
+- Found a bug or have an idea? Open an issue at <https://github.com/drainedgodw/luma-ide/issues>.
 - Prefer a quick chat? Message the author on Telegram: [@upsetsay](https://t.me/upsetsay).
 - Security-related reports: see `SECURITY.md`.
 
