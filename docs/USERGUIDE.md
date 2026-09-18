@@ -6,68 +6,12 @@ Luma is a Git-first IDE built around a visual history. This guide covers install
 
 ## 1. Installing and updating
 
-### Linux one-command install
+Installation is intentionally documented separately for each platform so that download links, verification, update, removal and troubleshooting steps stay together:
 
-Install or update Luma with the official installer:
+- [Linux download and installation guide](INSTALL_LINUX.md)
+- [Windows download and installation guide](INSTALL_WINDOWS.md)
 
-```bash
-bash -c "$(curl -fsSL https://raw.githubusercontent.com/drainedgodw/luma-ide/main/install.sh)"
-```
-
-The installer places the app under `~/.local/opt/luma`, creates `~/.local/bin/luma`, installs a desktop entry and icon, and verifies the AppImage checksum. FUSE is not required because the AppImage is unpacked during installation.
-
-Select a channel when needed:
-
-```bash
-curl -fsSL https://raw.githubusercontent.com/drainedgodw/luma-ide/main/install.sh | bash -s -- --release
-curl -fsSL https://raw.githubusercontent.com/drainedgodw/luma-ide/main/install.sh | bash -s -- --nightly
-curl -fsSL https://raw.githubusercontent.com/drainedgodw/luma-ide/main/install.sh | bash -s -- --source
-```
-
-Update by running the same command again. Remove the application but keep settings with `--uninstall`; remove application data too with `--purge`:
-
-```bash
-curl -fsSL https://raw.githubusercontent.com/drainedgodw/luma-ide/main/install.sh | bash -s -- --uninstall
-curl -fsSL https://raw.githubusercontent.com/drainedgodw/luma-ide/main/install.sh | bash -s -- --purge
-```
-
-### Linux manual download
-
-The stable release is **0.4.3**. Download `Luma-0.4.3.AppImage` and `SHA256SUMS.txt` from the release page, then verify and run it:
-
-```bash
-sha256sum -c SHA256SUMS.txt --ignore-missing
-chmod +x Luma-0.4.3.AppImage
-./Luma-0.4.3.AppImage
-```
-
-### Windows 10/11 download
-
-Download the x64 package from the official Windows release page. Choose:
-
-- `Luma-Windows-Setup-x64.exe` for a normal installation;
-- `Luma-Windows-Portable-x64.exe` for a portable copy;
-- `SHA256SUMS.txt` to verify the file.
-
-Run the setup executable, complete the wizard, and launch Luma from the Start menu. To remove it, use **Settings → Apps → Installed apps → Luma → Uninstall**. For the portable build, close Luma and delete the executable.
-
-If SmartScreen warns about the unsigned installer, check the checksum and use **More info → Run anyway** only when the file came from the official release page.
-
-### Windows build from source
-
-Windows builds use Node.js 22 from `.nvmrc`, npm 10 or newer, Git, Python 3.11 and Visual Studio Build Tools 2022:
-
-```powershell
-git clone https://github.com/drainedgodw/luma-ide.git
-cd luma-ide
-npm ci
-npm run typecheck
-npm test
-npm run build
-npx electron-builder --win nsis portable --publish never
-```
-
-The generated installers are placed in `dist/`.
+Use the platform guide before installing or updating. This user guide focuses on using Luma after it is running.
 
 ## 2. The start screen
 
