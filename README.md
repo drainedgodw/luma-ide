@@ -50,15 +50,9 @@ A visual, Git-first desktop IDE for Linux and Windows: understandable history, p
 
 ## Install
 
-**Windows installer — `Luma-Windows-Setup-x64.exe`**
+**[Luma-Windows-Setup-x64.exe](docs/INSTALL_WINDOWS.md)**
 
-[Open the complete Windows download and installation guide](docs/INSTALL_WINDOWS.md)
-
-**Linux package — `Luma-0.4.3.AppImage`**
-
-[Open the complete Linux download and installation guide](docs/INSTALL_LINUX.md)
-
-The two guides contain direct download methods, verification steps, installation and removal instructions, source builds, and fixes for common download problems.
+**[Luma-0.4.3.AppImage](docs/INSTALL_LINUX.md)**
 
 ## Features
 
