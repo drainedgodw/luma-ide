@@ -15,44 +15,24 @@ A visual, Git-first desktop IDE for Linux and Windows: understandable history, p
 > [!WARNING]
 > Windows installers are currently unsigned and may trigger Microsoft Defender SmartScreen. Only use files downloaded from the official Luma release pages.
 
-## Screenshots
+## Previews
 
-**Start** — open any directory, or jump back into a recent one. Luma is an editor first; Git initializes when you ask for it.
-![Start screen](docs/screenshots/login.png)
-
-**Code** — the editor: tabs, per-file Reload / Save / History / Stage, and a status line with position, indent and encoding.
-![Code](docs/screenshots/code.png)
-
-**Changes** — the working tree and the commit container: stage with + or by dragging a file in, write the message, commit or stash.
-![Changes](docs/screenshots/changes.png)
-
-**History — Lanes** — the commit list with ordinals, authors, tags and branch refs. ↑ ↓ navigate, Enter opens a commit.
-![History lanes](docs/screenshots/history_lanes.png)
-
-**History — Orbit** — the same repository as a flat, Obsidian-style web: nodes never overlap, hovering traces the branch while the rest of the web fades.
-![History orbit](docs/screenshots/history_orbit.png)
-
-**GitHub** — connect a fine-grained token, then clone and open repositories without leaving Luma.
-![GitHub](docs/screenshots/GitHub.png)
-
-**Tools** — workspace trust, detected project tasks, a read-only Git operation preview and workspace snapshots.
-![Tools](docs/screenshots/Tools.png)
-
-**Rescue** — every move `HEAD` ever made; any moment is one click away.
-![Rescue](docs/screenshots/rescue.png)
-
-**Stack** — the runtimes actually installed on the machine and the project manifest that was detected.
-![Stack](docs/screenshots/stack.png)
-
-**Settings** — editor, Git behavior, themes, interface sounds and the anonymous update check.
-![Settings](docs/screenshots/setup.png)
-
+<table>
+<tr>
+<td><img src="docs/screenshots/login.png" alt="Luma start screen" /></td>
+<td><img src="docs/screenshots/code.png" alt="Luma code editor" /></td>
+</tr>
+<tr>
+<td><img src="docs/screenshots/changes.png" alt="Luma changes view" /></td>
+<td><img src="docs/screenshots/history_orbit.png" alt="Luma history view" /></td>
+</tr>
+</table>
 
 ## Install
 
-**[Luma-Windows-Setup-x64.exe](docs/INSTALL_WINDOWS.md)**
+[Windows download and installation documentation](docs/INSTALL_WINDOWS.md)
 
-**[Luma-0.4.3.AppImage](docs/INSTALL_LINUX.md)**
+[Linux download and installation documentation](docs/INSTALL_LINUX.md)
 
 ## Features
 
